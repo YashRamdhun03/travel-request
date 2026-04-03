@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Travel Request</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
+<body>
+
+<header>
+  Travel Request – Date & Days Calculator
+</header>
+
+<div class="container">
+
+  <!-- Trip Details -->
+  <div class="card">
+    <h2>Trip details</h2>
+
+    <div class="row">
+      <div>
+        <label>Departure date</label>
+        <input type="date" id="departure">
+      </div>
+
+      <div>
+        <label>Return date</label>
+        <input type="date" id="return">
+      </div>
+    </div>
+
+    <!-- Toggle options -->
+    <div class="options">
+      <label><input type="radio" name="mode" value="calendar" checked> Calendar days</label>
+      <label><input type="radio" name="mode" value="working"> Working days (Mon–Fri)</label>
+      <label><input type="checkbox" id="holidays"> Exclude company holidays</label>
+    </div>
+
+    <!-- Result -->
+    <div class="result">
+      <span id="status">Select dates</span>
+      <strong id="days">0 days</strong>
+
+      <div class="actions">
+        <button id="clear">Clear</button>
+        <button id="copy">Copy summary</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Optional info -->
+  <div class="card">
+    <h2>Optional information</h2>
+
+    <input type="text" id="country" placeholder="Destination country">
+    <input type="text" id="city" placeholder="Destination city">
+    <input type="text" id="purpose" placeholder="Purpose">
+
+    <textarea id="notes" placeholder="Notes"></textarea>
+  </div>
+
+  <!-- Preview -->
+  <div class="card">
+    <h2>Preview</h2>
+    <pre id="preview">Departure: -
+Return: -</pre>
+  </div>
+
+  <!-- Submit -->
+  <button class="submit" id="submit">Submit Request</button>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
