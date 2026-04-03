@@ -1,72 +1,95 @@
-// عناصر
-const departure = document.getElementById("departure");
-const returnDate = document.getElementById("return");
-const daysEl = document.getElementById("days");
-const statusEl = document.getElementById("status");
+const dep     = document.getElementById('departure');
+const ret     = document.getElementById('return');
+const status  = document.getElementById('status');
+const days    = document.getElementById('days');
+const preview = document.getElementById('preview');
+const country = document.getElementById('country');
+const city    = document.getElementById('city');
+const purpose = document.getElementById('purpose');
+const notes   = document.getElementById('notes');
 
-// options
-const modeRadios = document.querySelectorAll("input[name='mode']");
+function calcDays() {
+  const d = dep.value, r = ret.value;
+  if (!d || !r) return null;
 
-// EVENTS
-departure.addEventListener("change", calculate);
-returnDate.addEventListener("change", calculate);
-modeRadios.forEach(r => r.addEventListener("change", calculate));
+  const start = new Date(d);
+  const end   = new Date(r);
+  if (end < start) return null;
 
-// MAIN FUNCTION
-function calculate() {
+  const mode = document.querySelector('input[name=mode]:checked').value;
 
-  const start = new Date(departure.value);
-  const end = new Date(returnDate.value);
-
-  // check valid dates
-  if (!departure.value || !returnDate.value) {
-    statusEl.textContent = "Select dates";
-    daysEl.textContent = "0 days";
-    return;
-  }
-
-  if (end < start) {
-    statusEl.textContent = "Return date must be after departure";
-    daysEl.textContent = "0 days";
-    return;
-  }
-
-  const selectedMode = document.querySelector("input[name='mode']:checked").value;
-
-  let days = 0;
-
-  if (selectedMode === "calendar") {
-    days = calculateCalendarDays(start, end);
+  if (mode === 'calendar') {
+    return Math.round((end - start) / 864e5) + 1;
   } else {
-    days = calculateWorkingDays(start, end);
-  }
-
-  statusEl.textContent = "Dates look good";
-  daysEl.textContent = days + " days";
-}
-
-// CALENDAR DAYS
-function calculateCalendarDays(start, end) {
-  const diff = (end - start) / (1000 * 60 * 60 * 24);
-  return diff + 1;
-}
-
-// WORKING DAYS (Mon–Fri)
-function calculateWorkingDays(start, end) {
-
-  let count = 0;
-  let current = new Date(start);
-
-  while (current <= end) {
-    const day = current.getDay();
-
-    // 0 = Sunday, 6 = Saturday
-    if (day !== 0 && day !== 6) {
-      count++;
+    let count = 0;
+    let cur = new Date(start);
+    while (cur <= end) {
+      const day = cur.getDay();
+      if (day !== 0 && day !== 6) count++;
+      cur.setDate(cur.getDate() + 1);
     }
+    return count;
+  }
+}
 
-    current.setDate(current.getDate() + 1);
+function fmt(v) {
+  return v
+    ? new Date(v).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+    : '—';
+}
+
+function update() {
+  const n = calcDays();
+
+  if (n === null) {
+    status.textContent = 'Select dates to calculate';
+    days.textContent   = '— days';
+  } else {
+    const mode = document.querySelector('input[name=mode]:checked').value;
+    status.textContent = mode === 'calendar' ? 'Calendar days' : 'Working days (Mon–Fri)';
+    days.textContent   = n + ' day' + (n === 1 ? '' : 's');
   }
 
-  return count;
+  const dest = [city.value, country.value].filter(Boolean).join(', ');
+
+  preview.textContent =
+    'Departure: ' + fmt(dep.value) + '\n' +
+    'Return:    ' + fmt(ret.value) + '\n' +
+    'Duration:  ' + (n !== null ? n + ' day' + (n === 1 ? '' : 's') : '—') + '\n' +
+    'Purpose:   ' + (purpose.value || '—') +
+    (dest ? '\nDestination: ' + dest : '');
 }
+
+// Listen for changes on all inputs
+[dep, ret, ...document.querySelectorAll('input[name=mode]'),
+  document.getElementById('holidays'), country, city, purpose, notes
+].forEach(el => el.addEventListener('change', update));
+
+[purpose, country, city].forEach(el => el.addEventListener('input', update));
+
+// Clear button
+document.getElementById('clear').addEventListener('click', () => {
+  dep.value = '';
+  ret.value = '';
+  document.querySelector('input[name=mode][value=calendar]').checked = true;
+  document.getElementById('holidays').checked = false;
+  [country, city, purpose, notes].forEach(el => el.value = '');
+  update();
+});
+
+// Copy summary button
+document.getElementById('copy').addEventListener('click', () => {
+  navigator.clipboard.writeText(preview.textContent).catch(() => {});
+  const btn = document.getElementById('copy');
+  btn.textContent = 'Copied!';
+  setTimeout(() => btn.textContent = 'Copy summary', 1500);
+});
+
+// Submit button
+document.getElementById('submit').addEventListener('click', () => {
+  if (!dep.value || !ret.value) {
+    status.textContent = 'Please fill in both dates first';
+    return;
+  }
+  alert('Request submitted!\n\n' + preview.textContent);
+});
