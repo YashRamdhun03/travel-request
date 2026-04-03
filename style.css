@@ -1,1 +1,64 @@
+body {
+  font-family: Arial;
+  background: #f4f6f8;
+  margin: 0;
+}
 
+header {
+  background: #1f5c8b;
+  color: white;
+  padding: 15px;
+  font-size: 18px;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.row {
+  display: flex;
+  gap: 20px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+}
+
+.options {
+  margin-top: 15px;
+}
+
+.result {
+  margin-top: 15px;
+  padding: 15px;
+  background: #eef2f5;
+  border-radius: 8px;
+}
+
+.actions {
+  margin-top: 10px;
+}
+
+button {
+  padding: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.submit {
+  width: 100%;
+  background: #0078d4;
+  color: white;
+  border: none;
+}
