@@ -1,7 +1,7 @@
 // ============================================================
 //  CONFIGURATION — paste your Power Automate HTTP trigger URL
 // ============================================================
-const POWER_AUTOMATE_URL = 'YOUR_POWER_AUTOMATE_HTTP_TRIGGER_URL_HERE';
+const POWER_AUTOMATE_URL = 'https://defaultc6a34697a34b4aee8e8bc884c409b5.80.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/9258c032d9f04c74bab08348315a73b4/triggers/manual/paths/invoke?api-version=1';
 
 // ============================================================
 //  Element references
