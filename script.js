@@ -1,7 +1,7 @@
 // ============================================================
 //  CONFIGURATION — paste your Power Automate HTTP trigger URL
 // ============================================================
-const POWER_AUTOMATE_URL = 'https://defaultc6a34697a34b4aee8e8bc884c409b5.80.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/9258c032d9f04c74bab08348315a73b4/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=TpE4I6MzpTUlbjZiSulC_m7eUBwMujzEasbAomRLaOE';
+const POWER_AUTOMATE_URL = 'https://defaultc6a34697a34b4aee8e8bc884c409b5.80.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/1029a42982314f2eb6a57070cbadb79b/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=ZtD0R7VO9E6n399Sx0fmwEl7_Gr_KNXwIqyDRUstn9M';
 
 // ============================================================
 //  Element references
